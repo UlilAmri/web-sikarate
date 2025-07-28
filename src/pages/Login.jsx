@@ -1,13 +1,19 @@
-import React from "react";
-
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    //
+    navigate('/dashboard');
+  };
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Login
         </h2>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleLogin}>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Email
@@ -15,7 +21,7 @@ const Login = () => {
             <input
               type="email"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400"
-              placeholder="you@example.com"
+              placeholder="email"
             />
           </div>
           <div>
@@ -25,7 +31,7 @@ const Login = () => {
             <input
               type="password"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400"
-              placeholder="••••••••"
+              placeholder="password"
             />
           </div>
           <div>
