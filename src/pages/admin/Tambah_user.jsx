@@ -1,6 +1,6 @@
     import { useState } from "react";
-    import Sidebar from "./layout/Sidebar";
-    import Navbar from "./layout/Navbar";
+import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar";
 
     const TambahUser = () => {
     const [form, setForm] = useState({

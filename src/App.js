@@ -1,12 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import DaftarLaporan from "./pages/Daftar_laporan";
-import DaftarUser from "./pages/Daftar_user";
-import Dashboard from "./pages/Dashboar";
-import DashboardAdmin from "./pages/DashboardAdmin";
-import TambahLaporan from "./pages/Form_Laporan";
+import DaftarLaporan from "./pages/admin/Daftar_laporan";
+import DaftarUser from "./pages/admin/Daftar_user";
+import DashboardAdmin from "./pages/admin/DashboardAdmin";
+import TambahUser from "./pages/admin/Tambah_user";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import TambahUser from "./pages/Tambah_user";
+import Dashboard from "./pages/user/Dashboar";
+import TambahLaporan from "./pages/user/Form_Laporan";
+import FormLaporan from "./pages/user/Form_Laporan";
+import RiwayatLaporan from "./pages/user/laporan";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/daftarlaporan" element={<DaftarLaporan />} />
         <Route path="/daftaruser" element={<DaftarUser />} />
         <Route path="/tambahuser" element={<TambahUser />} />
+        <Route path="/formlaporan" element={<FormLaporan/>} />
+        <Route path="/riwayatlaporan" element={<RiwayatLaporan/>} />
       </Routes>
     </Router>
   );

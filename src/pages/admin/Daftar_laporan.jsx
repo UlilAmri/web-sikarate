@@ -1,7 +1,7 @@
     import { ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-    import { useState } from "react";
-    import Navbar from "./layout/Navbar";
-    import Sidebar from "./layout/Sidebar";
+import { useState } from "react";
+import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar";
 
     const statusColor = {
     Disetujui: "bg-green-500",
@@ -28,16 +28,6 @@
                 <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700">
                 + LAPORAN BARU
                 </button>
-            </div>
-            <div className="flex justify-between items-center mb-2">
-                <div></div>
-                <input
-                type="text"
-                placeholder="Search..."
-                className="border px-3 py-2 rounded w-64"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                />
             </div>
             <div className="bg-white rounded-lg shadow overflow-x-auto">
                 <table className="min-w-full">

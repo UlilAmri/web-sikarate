@@ -6,11 +6,9 @@
     CheckBadgeIcon,
     UserPlusIcon,
     PencilSquareIcon,
-    ClockIcon,
-    EyeIcon,
     } from "@heroicons/react/24/outline";
 
-    const Sidebar = ({ role = "user" }) => {
+    const Sidebar = ({ role = "user", sidebarOpen = true }) => {
     const location = useLocation();
     const isActive = (path) => location.pathname === path;
 
@@ -19,9 +17,11 @@
         <h1 className="text-2xl font-bold mb-8">SIKARATE</h1>
         <nav className="space-y-4">
             <Link
-            to="/dashboard"
+            to={role === "admin" ? "/dashboardadmin" : "/dashboard"}
             className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                isActive("/dashboard") ? "bg-blue-800" : "hover:bg-blue-700"
+                isActive(role === "admin" ? "/dashboardadmin" : "/dashboard")
+                ? "bg-blue-800"
+                : "hover:bg-blue-700"
             }`}
             >
             <HomeIcon className="h-5 w-5" />
@@ -32,7 +32,7 @@
                 <Link
                 to="/daftarlaporan"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/daftar-laporan") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/daftarlaporan") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <ClipboardDocumentListIcon className="h-5 w-5" />
@@ -59,7 +59,7 @@
                 <Link
                 to="/daftaruser"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/users") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/daftaruser") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <UserPlusIcon className="h-5 w-5" />
@@ -69,40 +69,13 @@
             ) : (
             <>
                 <Link
-                to="/buat-laporan"
+                to="/riwayatlaporan"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/buat-laporan") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/riwayatlaporan") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <PencilSquareIcon className="h-5 w-5" />
-                Buat Laporan
-                </Link>
-                <Link
-                to="/riwayat"
-                className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/riwayat") ? "bg-blue-800" : "hover:bg-blue-700"
-                }`}
-                >
-                <ClockIcon className="h-5 w-5" />
-                Riwayat Laporan
-                </Link>
-                <Link
-                to="/status"
-                className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/status") ? "bg-blue-800" : "hover:bg-blue-700"
-                }`}
-                >
-                <EyeIcon className="h-5 w-5" />
-                Lihat Status
-                </Link>
-                <Link
-                to="/blog"
-                className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/blog") ? "bg-blue-800" : "hover:bg-blue-700"
-                }`}
-                >
-                <NewspaperIcon className="h-5 w-5" />
-                Blog
+                Laporan 
                 </Link>
             </>
             )}

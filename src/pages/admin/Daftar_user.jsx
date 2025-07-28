@@ -1,8 +1,8 @@
-    import { useState } from "react";
-    import { useNavigate } from "react-router-dom";
-    import Sidebar from "./layout/Sidebar";
-    import Navbar from "./layout/Navbar";
     import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar";
 
     const DaftarUser = () => {
     const [search, setSearch] = useState("");
@@ -25,16 +25,6 @@
                 >
                 + Tambah User
                 </button>
-            </div>
-            <div className="flex justify-between items-center mb-2">
-                <div></div>
-                <input
-                type="text"
-                placeholder="Cari user..."
-                className="border px-3 py-2 rounded w-64"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                />
             </div>
             <div className="bg-white rounded-lg shadow overflow-x-auto">
                 <table className="min-w-full">
