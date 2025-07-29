@@ -28,7 +28,7 @@ const Home = () => {
       <section className="flex flex-col items-center justify-center text-center py-20 px-4">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Selamat Datang di SIKARATE</h1>
         <p className="text-lg text-white/90 max-w-2xl mb-10">
-          Web pelaporan dan informasi kebakaran & penyelamatan Terpadu Dinas Kebakaran Kota Mataram
+          Web pelaporan dan informasi kebakaran & penyelamatan Terpadu Dinas Pemadam Kebakaran Kota Mataram
         </p>
         <div className="flex gap-10">
           <img src="/logo-kota.png" alt="Logo Mataram" className="h-36 drop-shadow-lg p-2 rounded-xl" />
