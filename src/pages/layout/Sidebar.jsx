@@ -1,34 +1,31 @@
-    import { Link, useLocation } from "react-router-dom";
     import {
-    HomeIcon,
-    ClipboardDocumentListIcon,
-    NewspaperIcon,
     CheckBadgeIcon,
-    UserPlusIcon,
-    PencilSquareIcon,
-    } from "@heroicons/react/24/outline";
+    ClipboardDocumentListIcon,
+    HomeIcon,
+    NewspaperIcon,
+    UserPlusIcon
+} from "@heroicons/react/24/outline";
+import { Link, useLocation } from "react-router-dom";
 
     const Sidebar = ({ role = "user", sidebarOpen = true }) => {
     const location = useLocation();
     const isActive = (path) => location.pathname === path;
 
     return (
-        <aside className="w-64 bg-blue-600 text-white min-h-screen p-6 hidden md:block">
+        <aside className="min-h-screen font-sans bg-gradient-to-br from-blue-400 to-cyan-600 text-white w-64 p-6 md:block">
         <h1 className="text-2xl font-bold mb-8">SIKARATE</h1>
         <nav className="space-y-4">
-            <Link
-            to={role === "admin" ? "/dashboardadmin" : "/dashboard"}
-            className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                isActive(role === "admin" ? "/dashboardadmin" : "/dashboard")
-                ? "bg-blue-800"
-                : "hover:bg-blue-700"
-            }`}
-            >
-            <HomeIcon className="h-5 w-5" />
-            Dashboard
-            </Link>
             {role === "admin" ? (
             <>
+                <Link
+                to="/dashboardadmin"
+                className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
+                    isActive("/dashboardadmin") ? "bg-blue-800" : "hover:bg-blue-700"
+                }`}
+                >
+                <HomeIcon className="h-5 w-5" />
+                Dashboard
+                </Link>
                 <Link
                 to="/daftarlaporan"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
@@ -39,9 +36,9 @@
                 Kelola Laporan
                 </Link>
                 <Link
-                to="/blog"
+                to="/daftarartikel"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/blog") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/daftarartikel") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <NewspaperIcon className="h-5 w-5" />
@@ -74,8 +71,8 @@
                     isActive("/riwayatlaporan") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
-                <PencilSquareIcon className="h-5 w-5" />
-                Laporan 
+                <ClipboardDocumentListIcon className="h-5 w-5" />
+                Riwayat Laporan
                 </Link>
             </>
             )}

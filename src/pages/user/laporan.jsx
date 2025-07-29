@@ -1,6 +1,6 @@
-    import { useState } from "react";
-    import Sidebar from "../layout/Sidebar";
-    import Navbar from "../layout/Navbar";
+import { useState } from "react";
+import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar";
 
     const statusColor = {
     diproses: "bg-yellow-500",
@@ -22,15 +22,23 @@
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold">Laporan Saya</h2>
             </div>
+            <div className="flex items-center justify-end mb-4">
+                <a
+                href="/formlaporan"
+                className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+                >
+                + Laporan
+                </a>
+            </div>
             <div className="bg-white rounded-lg shadow overflow-x-auto">
                 <table className="min-w-full">
                 <thead className="bg-gray-50">
                     <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">No</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Lokasi</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Waktu Kejadian</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Deskripsi</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Status Penanganan</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">No</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Lokasi</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Waktu Kejadian</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Deskripsi</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Status Penanganan</th>
                     </tr>
                 </thead>
                 <tbody>

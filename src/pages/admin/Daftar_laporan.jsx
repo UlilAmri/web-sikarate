@@ -1,7 +1,9 @@
-    import { ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Sidebar from "../layout/Sidebar";
+
 
     const statusColor = {
     Disetujui: "bg-green-500",
@@ -11,9 +13,15 @@ import Sidebar from "../layout/Sidebar";
     };
 
     const DaftarLaporan = () => {
+    const navigate = useNavigate();
+
+    const handlelaporan = () => {
+    navigate("/tambahlaporanadmin"); //
+
+    }
     const [search, setSearch] = useState("");
     // Data laporan akan diisi dari backend nanti
-    const laporan = []; // kosong, nanti diisi dari backend
+    const laporan = []; 
 
     return (
         <div className="flex h-screen">
@@ -25,7 +33,7 @@ import Sidebar from "../layout/Sidebar";
                 <div>
                 <h2 className="text-2xl font-bold">Daftar Laporan</h2>
                 </div>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 " onClick={handlelaporan}>
                 + LAPORAN BARU
                 </button>
             </div>

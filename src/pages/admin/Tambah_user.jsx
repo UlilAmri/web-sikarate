@@ -7,8 +7,8 @@ import Sidebar from "../layout/Sidebar";
         nama: "",
         email: "",
         password: "",
-        status: "aktif",
-        role: "user",
+        status: "",
+        role: "",
     });
 
     const handleChange = (e) => {
@@ -64,7 +64,7 @@ import Sidebar from "../layout/Sidebar";
                     required
                     />
                 </div>
-                <div>
+                {/* <div>
                     <label className="block font-medium mb-1 text-gray-700">Status</label>
                     <select
                     name="status"
@@ -75,7 +75,7 @@ import Sidebar from "../layout/Sidebar";
                     <option value="aktif">Aktif</option>
                     <option value="nonaktif">Nonaktif</option>
                     </select>
-                </div>
+                </div> */}
                 <div>
                     <label className="block font-medium mb-1 text-gray-700">Role</label>
                     <select

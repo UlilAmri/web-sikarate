@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Sidebar from "../layout/Sidebar";
 
-    const DaftarUser = () => {
+    const DaftarBerita = () => {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    const users = []; 
+    const berita = []; // This will hold the news data
 
     return (
         <div className="flex h-screen">
@@ -17,46 +17,38 @@ import Sidebar from "../layout/Sidebar";
             <Navbar role="admin" search={search} setSearch={setSearch} />
             <main className="p-6 flex-1 overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Daftar User</h2>
+                <h2 className="text-2xl font-bold">Daftar Artikel</h2>
                 <button
                 className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700"
-                onClick={() => navigate("/tambahuser")}
+                onClick={() => navigate("/tambahartikel")}
                 >
-                + Tambah User
+                + Tambah Artikel
                 </button>
             </div>
             <div className="bg-white rounded-lg shadow overflow-x-auto">
                 <table className="min-w-full">
                 <thead className="bg-gray-50">
                     <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">No</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Nama</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Email</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Role</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Aksi</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">No</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Judul</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {users.length === 0 ? (
+                    {berita.length === 0 ? (
                     <tr>
-                        <td colSpan={6} className="text-center py-8 text-gray-400">
-                        Tidak ada data user.
+                        <td colSpan={2} className="text-center py-8 text-gray-400">
+                        Tidak ada data berita.
                         </td>
                     </tr>
                     ) : (
-                    users
-                        .filter(user =>
-                        user.nama.toLowerCase().includes(search.toLowerCase()) ||
-                        user.email.toLowerCase().includes(search.toLowerCase())
+                    berita
+                        .filter((item) =>
+                        item.title.toLowerCase().includes(search.toLowerCase())
                         )
-                        .map((user, idx) => (
-                        <tr key={user.id_user} className="border-b hover:bg-gray-50">
-                            <td className="px-4 py-3">{idx + 1}</td>
-                            <td className="px-4 py-3">{user.nama}</td>
-                            <td className="px-4 py-3">{user.email}</td>
-                            <td className="px-4 py-3 capitalize">{user.role}</td>
-                            <td className="px-4 py-3 capitalize">{user.status}</td>
+                        .map((item, idx) => (
+                        <tr key={item.id} className="border-b hover:bg-gray-50">
+                            <td className="px-4 py-3">{item.title}</td>
                             <td className="px-4 py-3 flex gap-2">
                             <button className="p-1 hover:bg-gray-200 rounded" title="Edit">
                                 <PencilIcon className="h-5 w-5 text-green-600" />
@@ -77,4 +69,4 @@ import Sidebar from "../layout/Sidebar";
     );
     };
 
-    export default DaftarUser;
+    export default DaftarBerita;

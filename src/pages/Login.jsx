@@ -5,7 +5,7 @@ const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     //
-    navigate('/dashboard');
+    navigate('/riwayatlaporan');
   };
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
