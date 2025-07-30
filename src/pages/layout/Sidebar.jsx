@@ -18,27 +18,27 @@ import { Link, useLocation } from "react-router-dom";
             {role === "admin" ? (
             <>
                 <Link
-                to="/dashboardadmin"
+                to="/dashboard-admin"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/dashboardadmin") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/dashboard-admin") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <HomeIcon className="h-5 w-5" />
                 Dashboard
                 </Link>
                 <Link
-                to="/daftarlaporan"
+                to="/daftar-laporan"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/daftarlaporan") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/daftar-laporan") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <ClipboardDocumentListIcon className="h-5 w-5" />
                 Kelola Laporan
                 </Link>
                 <Link
-                to="/daftarartikel"
+                to="/daftar-artikel"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/daftarartikel") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/daftar-artikel") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <NewspaperIcon className="h-5 w-5" />
@@ -54,9 +54,9 @@ import { Link, useLocation } from "react-router-dom";
                 Verifikasi Laporan
                 </Link>
                 <Link
-                to="/daftaruser"
+                to="/daftar-user"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/daftaruser") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/daftar-user") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <UserPlusIcon className="h-5 w-5" />
@@ -66,9 +66,9 @@ import { Link, useLocation } from "react-router-dom";
             ) : (
             <>
                 <Link
-                to="/riwayatlaporan"
+                to="/riwayat-laporan"
                 className={`flex items-center gap-3 px-4 py-2 rounded-md font-medium ${
-                    isActive("/riwayatlaporan") ? "bg-blue-800" : "hover:bg-blue-700"
+                    isActive("/riwayat-laporan") ? "bg-blue-800" : "hover:bg-blue-700"
                 }`}
                 >
                 <ClipboardDocumentListIcon className="h-5 w-5" />

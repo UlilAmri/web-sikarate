@@ -129,9 +129,8 @@
                     <select name="jenis" value={formData.jenis} onChange={handleChange} className="input" required>
                         <option value="">Pilih Jenis Kejadian</option>
                         <option value="Kebakaran">Kebakaran</option>
-                        <option value="Banjir">Banjir</option>
-                        <option value="Kecelakaan">Kecelakaan</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="Banjir">Penyelamatan</option>
+                        <option value="Banjir">Edukasi/Pelatihan</option>
                     </select>
                     <select name="statusPenanganan" value={formData.statusPenanganan} onChange={handleChange} className="input" required>
                         <option value="">Pilih Status</option>

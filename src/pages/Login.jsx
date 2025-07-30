@@ -5,7 +5,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    navigate('/riwayatlaporan');
+    navigate('/riwayat-laporan');
   };
 
   return (
