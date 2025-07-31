@@ -1,11 +1,43 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate('/riwayat-laporan');
+
+    try {
+      const res = await axios.post(
+        'https://api-sikarate.mydemoapp.site/auth/login',
+        {
+          email,
+          password,
+        }
+      );
+
+      const { access_token, email: userEmail, role } = res.data;
+
+      // Simpan ke localStorage
+      localStorage.setItem('token', access_token);
+      localStorage.setItem('email', userEmail);
+      localStorage.setItem('role', role);
+
+      // Navigasi berdasarkan role
+      if (role === 'admin') {
+        navigate('/dashboard-admin');
+      } else {
+        navigate('/riwayat-laporan');
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || 'Login gagal. Cek kembali email/password.'
+      );
+    }
   };
 
   return (
@@ -15,6 +47,10 @@ const Login = () => {
           Login
         </h2>
 
+        {error && (
+          <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+        )}
+
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -23,6 +59,8 @@ const Login = () => {
             <input
               type="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
               placeholder="Email"
             />
@@ -34,6 +72,8 @@ const Login = () => {
             <input
               type="password"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
               placeholder="Password"
             />
