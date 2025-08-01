@@ -1,6 +1,6 @@
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import Navbar from "../layout/Navbar";
 import Sidebar from "../layout/Sidebar";
 
@@ -8,7 +8,7 @@ const statusColor = {
   Terverifikasi: "bg-green-500",
   Diproses: "bg-yellow-500",
   Ditolak: "bg-red-500",
-  Menunggu: "bg-gray-400",
+
 };
 
 const VerifikasiLaporan = () => {

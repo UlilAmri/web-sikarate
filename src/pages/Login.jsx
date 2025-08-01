@@ -20,12 +20,15 @@ const Login = () => {
         }
       );
 
-      const { access_token, email: userEmail, role } = res.data;
+      const { access_token, email: userEmail, role,id_user } = res.data;
 
       // Simpan ke localStorage
       localStorage.setItem('token', access_token);
       localStorage.setItem('email', userEmail);
       localStorage.setItem('role', role);
+      localStorage.setItem("id_user", id_user);
+      
+
 
       // Navigasi berdasarkan role
       if (role === 'admin') {

@@ -1,10 +1,31 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 const Home = () => {
   const navigate = useNavigate();
+  const [berita, setBerita] = useState([]);
 
   const handlemasuk = () => {
-    navigate("/login"); // 
-  }; 
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    const fetchBerita = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await axios.get("https://api-sikarate.mydemoapp.site/blog/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setBerita(res.data.data || []); // <- ambil dari data.data
+      } catch (error) {
+        console.error("Gagal memuat berita:", error);
+        setBerita([]);
+      }
+    };
+
+    fetchBerita();
+  }, []);
 
   return (
     <div className="min-h-screen font-sans bg-gradient-to-br from-blue-400 to-cyan-600 text-white">
@@ -19,7 +40,10 @@ const Home = () => {
             </p>
           </div>
         </div>
-        <button className="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition" onClick={handlemasuk}>
+        <button
+          className="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition"
+          onClick={handlemasuk}
+        >
           Masuk
         </button>
       </nav>
@@ -40,14 +64,22 @@ const Home = () => {
       <section className="bg-white text-gray-800 px-8 py-12">
         <h2 className="text-2xl font-bold mb-6 text-center">Berita Terbaru</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="bg-gray-100 rounded-lg shadow-md h-48 flex items-center justify-center text-gray-500 text-sm italic"
-            >
-              [Artikel akan muncul di sini]
-            </div>
-          ))}
+          {berita.length > 0 ? (
+            berita.map((item) => (
+              <div
+                key={item.id}
+                className="bg-gray-100 rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300"
+              >
+                <h3 className="font-semibold text-lg mb-2">{item.judul}</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  {new Date(item.created_at).toLocaleDateString("id-ID")}
+                </p>
+                <p className="text-sm text-gray-700 line-clamp-3">{item.isi}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-center col-span-3 text-gray-500 italic">Belum ada berita tersedia</p>
+          )}
         </div>
       </section>
     </div>
