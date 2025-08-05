@@ -4,151 +4,220 @@ import { useEffect, useState } from "react";
 import Navbar from "../layout/Navbar";
 import Sidebar from "../layout/Sidebar";
 
-    const DaftarUser = () => {
-    const [search, setSearch] = useState("");
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
-        const [form, setForm] = useState({
-            nama: "",
-            email: "",
-            password: "",
-            role: "",
-        });
-    const handleChange = (e) => {
+const DaftarUser = () => {
+  const [search, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editUserId, setEditUserId] = useState(null);
+
+  const [form, setForm] = useState({
+    nama: "",
+    email: "",
+    password: "",
+    role: "",
+  });
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            const res = await axios.get("https://api-sikarate.mydemoapp.site/user/", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            });
-            setUsers(res.data.data || []);
-        } catch (error) {
-            console.error("Gagal mengambil data user:", error);
-            setUsers([]);
-        } finally {
-            setLoading(false);
-        }
-        };
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("https://api-sikarate.mydemoapp.site/user/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUsers(res.data.data || []);
+    } catch (error) {
+      console.error("Gagal mengambil data user:", error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.nama.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase())||
+      user.role.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    const url = isEditing
+      ? `https://api-sikarate.mydemoapp.site/user/${editUserId}`
+      : "https://api-sikarate.mydemoapp.site/user/";
+    const method = isEditing ? "PUT" : "POST";
+    
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+          nama: form.nama,
+          role: form.role,
+        }),
+      });
+
+      if (response.ok) {
+        setForm({ nama: "", email: "", password: "", role: "" });
+        setShowModal(false);
+        setIsEditing(false);
+        setEditUserId(null);
+        alert(isEditing ? "User berhasil diubah!" : "User berhasil ditambahkan!");
         fetchUsers();
-    }, []);
+      } else {
+        const errData = await response.json();
+        alert(`Gagal menyimpan data: ${errData.message || "Terjadi kesalahan"}`);
+      }
+    } catch (error) {
+      alert("Terjadi kesalahan jaringan. Coba lagi nanti.");
+    }
+  };
 
-    const filteredUsers = users.filter(
-        (user) =>
-        user.nama.toLowerCase().includes(search.toLowerCase()) ||
-        user.email.toLowerCase().includes(search.toLowerCase())
-    );
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem("token");
+  const handleEdit = (user) => {
+    setForm({
+      nama: user.nama,
+      email: user.email,
+      password: "",
+      role: user.role,
+    });
+    setEditUserId(user.id_user);
+    setIsEditing(true);
+    setShowModal(true);
+  };
 
-        try {
-        const response = await fetch("https://api-sikarate.mydemoapp.site/user/", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-            email: form.email,
-            password: form.password,
-            nama: form.nama,
-            role: form.role,
-            }),
-        });
+  
+  const handleDelete = async (id_user) => {
+  const konfirmasi = window.confirm("Apakah Anda yakin ingin menghapus user ini?");
+  if (!konfirmasi) return;
 
-        if (response.ok) {
-            setForm({ nama: "", email: "", password: "", role: "" });
-            alert("User berhasil ditambahkan!");
-            setShowModal(false);
-        } else {
-            const errData = await response.json();
-            alert(`Gagal menambahkan user: ${errData.message || "Terjadi kesalahan"}`);
-        }
-        } catch (error) {
-        alert("Terjadi kesalahan jaringan. Coba lagi nanti.");
-        }
-    };
+  const token = localStorage.getItem("token");
 
+  // 🔍 Tambahkan log sebelum request
+  console.log("Menghapus user dengan ID:", id_user);
+  console.log("Token yang digunakan:", token);
 
-    return (
-        <div className="flex h-screen">
-        <Sidebar role="admin" />
-        <div className="flex-1 flex flex-col bg-gray-100">
-            <Navbar role="admin" search={search} setSearch={setSearch} />
-            <main className="p-6 flex-1 overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Daftar User</h2>
-                <button
-                className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700"
-                onClick={() => setShowModal(true)}
-                >
-                + Tambah User
-                </button>
-            </div>
+  try {
+    const res = await axios.delete(`https://api-sikarate.mydemoapp.site/user/${id_user}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-            <div className="bg-white rounded-lg shadow overflow-x-auto">
-                <table className="min-w-full">
-                <thead className="bg-gray-50">
-                    <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">No</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Nama</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Email</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Role</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Aksi</th>
+    // ✅ Log respon jika berhasil
+    console.log("User berhasil dihapus. Respon server:", res.data);
+    alert("User berhasil dihapus");
+    fetchUsers();
+  } catch (error) {
+    // ❌ Log error secara detail
+    console.error("Gagal menghapus user:", error.response || error.message || error);
+    alert("Gagal menghapus user");
+  }
+};
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar role="admin" />
+      <div className="flex-1 flex flex-col bg-gray-100">
+        <Navbar role="admin" search={search} setSearch={setSearch} />
+        <main className="p-6 flex-1 overflow-y-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Daftar User</h2>
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700"
+              onClick={() => {
+                setShowModal(true);
+                setIsEditing(false);
+                setForm({ nama: "", email: "", password: "", role: "" });
+              }}
+            >
+              + Tambah User
+            </button>
+          </div>
+
+          <div className="bg-white rounded-lg shadow overflow-x-auto">
+            <table className="min-w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">No</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Nama</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Email</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Role</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={6} className="text-center py-8 text-gray-400">
+                      Memuat data...
+                    </td>
+                  </tr>
+                ) : filteredUsers.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="text-center py-8 text-gray-400">
+                      Tidak ada data user.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredUsers.map((user, idx) => (
+                    <tr key={user.id_user} className="border-b hover:bg-gray-50">
+                      <td className="px-4 py-3">{idx + 1}</td>
+                      <td className="px-4 py-3">{user.nama}</td>
+                      <td className="px-4 py-3">{user.email}</td>
+                      <td className="px-4 py-3 capitalize">{user.role}</td>
+                      <td className="px-4 py-3 capitalize">
+                        {user.status === 1 ? "Aktif" : "Nonaktif"}
+                      </td>
+                      <td className="px-4 py-3 flex gap-2">
+                        <button
+                          className="p-1 hover:bg-gray-200 rounded"
+                          title="Edit"
+                          onClick={() => handleEdit(user)}
+                        >
+                          <PencilIcon className="h-5 w-5 text-green-600" />
+                        </button>
+                        <button
+                          className="p-1 hover:bg-gray-200 rounded"
+                          title="Hapus"
+                          onClick={() => handleDelete(user.id_user)}
+                        >
+                          <TrashIcon className="h-5 w-5 text-red-600" />
+                        </button>
+                      </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {loading ? (
-                    <tr>
-                        <td colSpan={6} className="text-center py-8 text-gray-400">
-                        Memuat data...
-                        </td>
-                    </tr>
-                    ) : filteredUsers.length === 0 ? (
-                    <tr>
-                        <td colSpan={6} className="text-center py-8 text-gray-400">
-                        Tidak ada data user.
-                        </td>
-                    </tr>
-                    ) : (
-                    filteredUsers.map((user, idx) => (
-                        <tr key={user.id_user} className="border-b hover:bg-gray-50">
-                        <td className="px-4 py-3">{idx + 1}</td>
-                        <td className="px-4 py-3">{user.nama}</td>
-                        <td className="px-4 py-3">{user.email}</td>
-                        <td className="px-4 py-3 capitalize">{user.role}</td>
-                        <td className="px-4 py-3 capitalize">
-                            {user.status === 1 ? "Aktif" : "Nonaktif"}
-                        </td>
-                        <td className="px-4 py-3 flex gap-2">
-                            <button className="p-1 hover:bg-gray-200 rounded" title="Edit">
-                            <PencilIcon className="h-5 w-5 text-green-600" />
-                            </button>
-                            <button className="p-1 hover:bg-gray-200 rounded" title="Hapus">
-                            <TrashIcon className="h-5 w-5 text-red-600" />
-                            </button>
-                        </td>
-                        </tr>
-                    ))
-                    )}
-                </tbody>
-                </table>
-            </div>
-              {/* Modal Tambah User */}
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Modal Tambah/Edit User */}
           {showModal && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
               <div className="bg-white p-6 rounded-lg shadow max-w-md w-full relative">
-                <h3 className="text-lg font-semibold mb-4">Tambah User</h3>
+                <h3 className="text-lg font-semibold mb-4">
+                  {isEditing ? "Edit User" : "Tambah User"}
+                </h3>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Nama</label>
@@ -198,7 +267,12 @@ import Sidebar from "../layout/Sidebar";
                   <div className="flex justify-end gap-2 pt-2">
                     <button
                       type="button"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => {
+                        setShowModal(false);
+                        setIsEditing(false);
+                        setEditUserId(null);
+                        setForm({ nama: "", email: "", password: "", role: "user" });
+                      }}
                       className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
                     >
                       Batal
@@ -215,9 +289,9 @@ import Sidebar from "../layout/Sidebar";
             </div>
           )}
         </main>
-        </div>
-        </div>
-    );
-    };
+      </div>
+    </div>
+  );
+};
 
-    export default DaftarUser;
+export default DaftarUser;
