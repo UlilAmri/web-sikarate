@@ -24,7 +24,7 @@ const DaftarLaporan = () => {
 
   const fetchLaporan = async () => {
     try {
-      const res = await axios.get("http://192.168.1.38:5000/laporan/", {
+      const res = await axios.get("https://api-sikarate.mydemoapp.site/laporan/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLaporan(res.data.data || []);
@@ -70,7 +70,7 @@ const DaftarLaporan = () => {
         alert("Laporan berhasil diperbarui!");
       } else {
         await axios.post(
-          "http://192.168.1.38:5000/laporan/",
+          "https://api-sikarate.mydemoapp.site/laporan/",
           {
             judul: form.judul,
             lokasi: form.lokasi,
