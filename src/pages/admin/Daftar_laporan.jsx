@@ -276,7 +276,7 @@ const DaftarLaporan = () => {
                     <option value="">Pilih Jenis</option>
                     <option value="kebakaran">Kebakaran</option>
                     <option value="penyelamatan">Penyelamatan</option>
-                    <option value="penyelamatan">Edukasi</option>
+                    <option value="Edukasi">Edukasi</option>
                   </select>
                   <input
                     type="datetime-local"

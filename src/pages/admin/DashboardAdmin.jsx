@@ -28,7 +28,7 @@ const DashboardAdmin = () => {
 
   const totalLaporan = laporan.length;
   const laporanTerverifikasi = laporan.filter(
-    (lap) => lap.status_penanganan === "Terverifikasi"
+    (lap) => lap.status_penanganan === "Terlayani"
   ).length;
   const laporanDiproses = laporan.filter(
     (lap) => lap.status_penanganan === "diproses"
@@ -47,7 +47,7 @@ const DashboardAdmin = () => {
             </div>
             <div className="bg-white rounded shadow p-4 text-center">
               <div className="text-3xl font-bold text-green-600">{laporanTerverifikasi}</div>
-              <div className="text-gray-600 text-sm">Laporan Terverifikasi</div>
+              <div className="text-gray-600 text-sm">Laporan Terlayani</div>
             </div>
             <div className="bg-white rounded shadow p-4 text-center">
               <div className="text-3xl font-bold text-yellow-600">{laporanDiproses}</div>

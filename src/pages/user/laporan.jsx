@@ -21,57 +21,52 @@ import Sidebar from "../layout/Sidebar";
         waktu_kejadian: "",
         jenis: "",
         deskripsi: "",
+        nama: "", // ✅ Tambahkan nama
     });
 
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-    const getIdAndFetchLaporan = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Token tidak ditemukan. Silakan login ulang.");
-      return;
-    }
+        const getIdAndFetchLaporan = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Token tidak ditemukan. Silakan login ulang.");
+            return;
+        }
 
-    try {
-      // Cek isi token
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const id = payload.id_user;
-      console.log("✅ ID User dari Token:", id);
-      setIdUser(id);
+        try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            const id = payload.id_user;
+            setIdUser(id);
 
-      // Panggil API
-      setLoading(true);
-      const res = await axios.get(
-        `http://192.168.1.3:5000/laporan/user?id_user=${id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+            setLoading(true);
+            const res = await axios.get(
+            `https://api-sikarate.mydemoapp.site/laporan/user?id_user=${id}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-      console.log("✅ Respon dari API:", res.data);
-      if (res.data && res.data.data) {
-        setLaporan(res.data.data);
-      } else {
-        alert("Data kosong dari server.");
-      }
-    } catch (err) {
-      console.error("❌ Error saat ambil laporan:", err);
-      alert("Gagal mengambil data laporan.");
-    } finally {
-      setLoading(false);
-    }
-  };
+            if (res.data && res.data.data) {
+            setLaporan(res.data.data);
+            } else {
+            setLaporan([]);
+            }
+        } catch (err) {
+            console.error("❌ Error saat ambil laporan:", err);
+            alert("Gagal mengambil data laporan.");
+        } finally {
+            setLoading(false);
+        }
+        };
 
-  getIdAndFetchLaporan();
-}, []);
+        getIdAndFetchLaporan();
+    }, []);
 
     const fetchLaporan = async () => {
         setLoading(true);
         try {
         const res = await axios.get(
-            `http://192.168.1.3:5000/laporan/user?id_user=${idUser}`,
-            {
-            headers: { Authorization: `Bearer ${token}` },
-            }
+            `https://api-sikarate.mydemoapp.site/laporan/user?id_user=${idUser}`,
+            { headers: { Authorization: `Bearer ${token}` } }
         );
         setLaporan(res.data.data || []);
         } catch (error) {
@@ -96,11 +91,9 @@ import Sidebar from "../layout/Sidebar";
 
         try {
         await axios.post(
-            "http://192.168.1.3:5000/laporan/",
+            "https://api-sikarate.mydemoapp.site/laporan/",
             newLaporan,
-            {
-            headers: { Authorization: `Bearer ${token}` },
-            }
+            { headers: { Authorization: `Bearer ${token}` } }
         );
         alert("✅ Laporan berhasil dikirim.");
         fetchLaporan();
@@ -110,6 +103,7 @@ import Sidebar from "../layout/Sidebar";
             waktu_kejadian: "",
             jenis: "",
             deskripsi: "",
+            nama: "",
         });
         setShowModal(false);
         } catch (error) {
@@ -141,6 +135,17 @@ import Sidebar from "../layout/Sidebar";
                     <h3 className="text-lg font-semibold mb-4">Tambah Laporan</h3>
                     <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
+                        <label className="block text-sm font-medium">Nama</label>
+                        <input
+                        type="text"
+                        name="nama"
+                        value={formData.nama}
+                        onChange={handleFormChange}
+                        className="w-full mt-1 border border-gray-300 rounded px-3 py-2"
+                        required
+                        />
+                    </div>
+                    <div>
                         <label className="block text-sm font-medium">Judul</label>
                         <input
                         type="text"
@@ -163,7 +168,9 @@ import Sidebar from "../layout/Sidebar";
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium">Waktu Kejadian</label>
+                        <label className="block text-sm font-medium">
+                        Waktu Kejadian
+                        </label>
                         <input
                         type="datetime-local"
                         name="waktu_kejadian"
@@ -174,7 +181,9 @@ import Sidebar from "../layout/Sidebar";
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium">Jenis Kejadian</label>
+                        <label className="block text-sm font-medium">
+                        Jenis Kejadian
+                        </label>
                         <select
                         name="jenis"
                         value={formData.jenis}
@@ -188,7 +197,9 @@ import Sidebar from "../layout/Sidebar";
                         </select>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium">Deskripsi</label>
+                        <label className="block text-sm font-medium">
+                        Deskripsi
+                        </label>
                         <textarea
                         name="deskripsi"
                         value={formData.deskripsi}
@@ -221,40 +232,71 @@ import Sidebar from "../layout/Sidebar";
             {/* Tabel Laporan */}
             <div className="bg-white rounded-lg shadow overflow-x-auto">
                 {loading ? (
-                <div className="text-center p-6 text-gray-500">Memuat data...</div>
+                <div className="text-center p-6 text-gray-500">
+                    Memuat data...
+                </div>
                 ) : (
                 <table className="min-w-full">
                     <thead className="bg-gray-50">
                     <tr>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">No</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Judul</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Lokasi</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Waktu</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Jenis</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Deskripsi</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">Status</th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        No
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Nama
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Judul
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Lokasi
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Waktu
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Jenis
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Deskripsi
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500">
+                        Status
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     {laporan.length === 0 ? (
                         <tr>
-                        <td colSpan={7} className="text-center py-8 text-gray-400">
+                        <td
+                            colSpan={8}
+                            className="text-center py-8 text-gray-400"
+                        >
                             Tidak ada laporan.
                         </td>
                         </tr>
                     ) : (
                         laporan.map((lap, idx) => (
-                        <tr key={lap.id_laporan} className="border-b hover:bg-gray-50">
+                        <tr
+                            key={lap.id_laporan}
+                            className="border-b hover:bg-gray-50"
+                        >
                             <td className="px-4 py-3 text-center">{idx + 1}</td>
+                            <td className="px-4 py-3 text-center">{lap.nama}</td>
                             <td className="px-4 py-3 text-center">{lap.judul}</td>
                             <td className="px-4 py-3 text-center">{lap.lokasi}</td>
-                            <td className="px-4 py-3 text-center">{lap.waktu_kejadian}</td>
+                            <td className="px-4 py-3 text-center">
+                            {lap.waktu_kejadian}
+                            </td>
                             <td className="px-4 py-3 text-center">{lap.jenis}</td>
                             <td className="px-4 py-3">{lap.deskripsi}</td>
                             <td className="px-4 py-3 text-center">
                             <span className="inline-flex items-center gap-2">
                                 <span
-                                className={`w-2 h-2 rounded-full ${statusColor[lap.status_penanganan] || "bg-gray-400"}`}
+                                className={`w-2 h-2 rounded-full ${
+                                    statusColor[lap.status_penanganan] ||
+                                    "bg-gray-400"
+                                }`}
                                 ></span>
                                 {lap.status_penanganan || "-"}
                             </span>

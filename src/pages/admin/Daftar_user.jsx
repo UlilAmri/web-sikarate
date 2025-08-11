@@ -49,6 +49,7 @@ const DaftarUser = () => {
     (user) =>
       user.nama.toLowerCase().includes(search.toLowerCase()) ||
       user.email.toLowerCase().includes(search.toLowerCase())||
+      user.password.toLowerCase().includes(search.toLowerCase())||
       user.role.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -96,7 +97,7 @@ const DaftarUser = () => {
     setForm({
       nama: user.nama,
       email: user.email,
-      password: "",
+      password: user.password,
       role: user.role,
     });
     setEditUserId(user.id_user);
@@ -260,6 +261,7 @@ const DaftarUser = () => {
                       onChange={handleChange}
                       className="w-full border border-gray-300 rounded px-3 py-2"
                     >
+                      <option value="">Pilih Role</option>
                       <option value="user">User</option>
                       <option value="admin">Admin</option>
                     </select>
@@ -271,7 +273,7 @@ const DaftarUser = () => {
                         setShowModal(false);
                         setIsEditing(false);
                         setEditUserId(null);
-                        setForm({ nama: "", email: "", password: "", role: "user" });
+                        setForm({ nama: "", email: "", password: "", role: "" });
                       }}
                       className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
                     >

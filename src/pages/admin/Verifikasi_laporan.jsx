@@ -5,7 +5,7 @@ import Navbar from "../layout/Navbar";
 import Sidebar from "../layout/Sidebar";
 
 const statusColor = {
-  Terverifikasi: "bg-green-500",
+  Terlayani : "bg-green-500",
   Diproses: "bg-yellow-500",
   Ditolak: "bg-red-500",
 
@@ -117,11 +117,11 @@ const VerifikasiLaporan = () => {
                         <td className="px-4 py-3">
                           <div className="flex gap-2">
                             <button
-                              onClick={() => updateStatus(lap.id_laporan, "Terverifikasi")}
+                              onClick={() => updateStatus(lap.id_laporan, "Terlayani")}
                               className="p-1 hover:bg-green-100 text-green-600 rounded flex items-center gap-1"
                             >
                               <CheckIcon className="w-5 h-5" />
-                              Verifikasi
+                              Terlayani
                             </button>
                             <button
                               onClick={() => updateStatus(lap.id_laporan, "Ditolak")}
