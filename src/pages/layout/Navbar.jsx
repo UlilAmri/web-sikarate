@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
     return (
         <header className="sticky top-0 z-50 bg-white px-6 py-4 shadow-sm flex justify-between items-center">
         <div className="flex items-center gap-4">
+    
         </div>
         <div className="flex items-center gap-4">
             <input

@@ -52,6 +52,7 @@ const DaftarUser = () => {
       user.password.toLowerCase().includes(search.toLowerCase())||
       user.role.toLowerCase().includes(search.toLowerCase())
   );
+  const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,40 +107,32 @@ const DaftarUser = () => {
   };
 
   
-  const handleDelete = async (id_user) => {
-  const konfirmasi = window.confirm("Apakah Anda yakin ingin menghapus user ini?");
-  if (!konfirmasi) return;
+  const handleDelete = async (id) => {
+    const konfirmasi = window.confirm("Apakah Anda yakin ingin menghapus user ini?");
+    if (!konfirmasi) return;
 
-  const token = localStorage.getItem("token");
-
-  // 🔍 Tambahkan log sebelum request
-  console.log("Menghapus user dengan ID:", id_user);
-  console.log("Token yang digunakan:", token);
-
-  try {
-    const res = await axios.delete(`https://api-sikarate.mydemoapp.site/user/${id_user}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    // ✅ Log respon jika berhasil
-    console.log("User berhasil dihapus. Respon server:", res.data);
-    alert("User berhasil dihapus");
-    fetchUsers();
-  } catch (error) {
-    // ❌ Log error secara detail
-    console.error("Gagal menghapus user:", error.response || error.message || error);
-    alert("Gagal menghapus user");
-  }
-};
+    try {
+      await axios.delete(`https://1api-sikarate.mydemoapp.site/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert("User berhasil dihapus!");
+      fetchUsers();
+    } catch (error) {
+      console.error("Gagal menghapus User:", error);
+      alert("Terjadi kesalahan saat menghapus User.");
+    }
+  };
 
   return (
-    <div className="flex h-screen">
-      <Sidebar role="admin" />
-      <div className="flex-1 flex flex-col bg-gray-100">
-        <Navbar role="admin" search={search} setSearch={setSearch} />
-        <main className="p-6 flex-1 overflow-y-auto">
+     <div className="flex full-screen">
+    {/* Sidebar selalu full height */}
+    <Sidebar role="admin" />
+
+    {/* Konten utama */}
+    <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
+      <Navbar role="admin" search={search} setSearch={setSearch} />
+
+      <main className="p-6 flex-1 overflow-y-auto min-h-screen">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Daftar User</h2>
             <button
@@ -154,7 +147,7 @@ const DaftarUser = () => {
             </button>
           </div>
 
-          <div className="bg-white rounded-lg shadow overflow-x-auto">
+          <div className="bg-white rounded-lg shadow overflow-x-auto ">
             <table className="min-w-full">
               <thead className="bg-gray-50">
                 <tr>
@@ -185,7 +178,7 @@ const DaftarUser = () => {
                       <td className="px-4 py-3">{idx + 1}</td>
                       <td className="px-4 py-3">{user.nama}</td>
                       <td className="px-4 py-3">{user.email}</td>
-                      <td className="px-4 py-3 capitalize">{user.role}</td>
+                      <td className="px-4 py-3 capitalize">{user.role || user.Role}</td>
                       <td className="px-4 py-3 capitalize">
                         {user.status === 1 ? "Aktif" : "Nonaktif"}
                       </td>

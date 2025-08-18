@@ -17,7 +17,7 @@ const DaftarLaporan = () => {
     jenis: "",
     waktu_kejadian: "",
     deskripsi: "",
-    nama: "", // ✅ Tambahkan nama di form
+    nama: "",
   });
 
   const token = localStorage.getItem("token");
@@ -58,7 +58,7 @@ const DaftarLaporan = () => {
             waktu_kejadian: form.waktu_kejadian,
             jenis: form.jenis,
             deskripsi: form.deskripsi,
-            nama: form.nama, // ✅ Tambahkan nama ke PUT
+            nama: form.nama,
           },
           {
             headers: {
@@ -77,7 +77,7 @@ const DaftarLaporan = () => {
             waktu_kejadian: form.waktu_kejadian,
             jenis: form.jenis,
             deskripsi: form.deskripsi,
-            nama: form.nama, // ✅ Tambahkan nama ke POST
+            nama: form.nama,
           },
           {
             headers: {
@@ -96,7 +96,7 @@ const DaftarLaporan = () => {
         jenis: "",
         waktu_kejadian: "",
         deskripsi: "",
-        nama: "", // ✅ Reset nama
+        nama: "",
       });
       setShowModal(false);
       setEditMode(false);
@@ -142,15 +142,15 @@ const DaftarLaporan = () => {
   });
 
   return (
-    <div className="flex h-screen">
+    <div className="flex mih-h-screen">
       <Sidebar role="admin" />
       <div className="flex-1 flex flex-col bg-gray-100">
         <Navbar role="admin" search={search} setSearch={setSearch} />
-        <main className="p-6 flex-1 overflow-y-auto">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">Daftar Laporan</h2>
+        <main className="p-4 sm:p-6 flex-1 overflow-y-auto">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold">Daftar Laporan</h2>
             <button
-              className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700"
+              className="bg-blue-600 text-white px-3 py-2 rounded font-semibold hover:bg-blue-700 text-sm sm:text-base"
               onClick={() => {
                 setForm({
                   id_laporan: null,
@@ -159,7 +159,7 @@ const DaftarLaporan = () => {
                   jenis: "",
                   waktu_kejadian: "",
                   deskripsi: "",
-                  nama: "", // ✅ Reset nama juga
+                  nama: "",
                 });
                 setEditMode(false);
                 setShowModal(true);
@@ -169,19 +169,20 @@ const DaftarLaporan = () => {
             </button>
           </div>
 
+          {/* Table Responsive */}
           <div className="bg-white rounded-lg shadow overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
+            <table className="min-w-full text-sm">
+              <thead className="bg-gray-50 text-gray-700">
                 <tr>
-                  <th className="px-4 py-3">No</th>
-                  <th className="px-4 py-3">Judul</th>
-                  <th className="px-4 py-3">Nama</th> {/* ✅ Kolom nama */}
-                  <th className="px-4 py-3">Lokasi</th>
-                  <th className="px-4 py-3">Jenis</th>
-                  <th className="px-4 py-3">Waktu</th>
-                  <th className="px-4 py-3">Deskripsi</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Aksi</th>
+                  <th className="px-4 py-3 text-left">No</th>
+                  <th className="px-4 py-3 text-left">Judul</th>
+                  <th className="px-4 py-3 text-left">Nama</th>
+                  <th className="px-4 py-3 text-left">Lokasi</th>
+                  <th className="px-4 py-3 text-left">Jenis</th>
+                  <th className="px-4 py-3 text-left">Waktu</th>
+                  <th className="px-4 py-3 text-left">Deskripsi</th>
+                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="px-4 py-3 text-left">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -202,13 +203,13 @@ const DaftarLaporan = () => {
                     <tr key={lap.id_laporan} className="border-b hover:bg-gray-50">
                       <td className="px-4 py-3">{idx + 1}</td>
                       <td className="px-4 py-3">{lap.judul}</td>
-                      <td className="px-4 py-3">{lap.nama}</td> {/* ✅ Tampilkan nama */}
+                      <td className="px-4 py-3">{lap.nama}</td>
                       <td className="px-4 py-3">{lap.lokasi}</td>
                       <td className="px-4 py-3 capitalize">{lap.jenis}</td>
                       <td className="px-4 py-3">{lap.waktu_kejadian}</td>
                       <td className="px-4 py-3">{lap.deskripsi}</td>
                       <td className="px-4 py-3">{lap.status_penanganan || "-"}</td>
-                      <td className="px-4 py-3 flex space-x-2">
+                      <td className="px-4 py-3 flex gap-2">
                         <button
                           onClick={() => handleEdit(lap)}
                           className="text-yellow-500 hover:text-yellow-600"
@@ -231,10 +232,10 @@ const DaftarLaporan = () => {
             </table>
           </div>
 
-          {/* Modal Tambah/Edit Laporan */}
+          {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-              <div className="bg-white p-6 rounded-lg shadow max-w-md w-full relative">
+              <div className="bg-white p-6 rounded-lg shadow max-w-md w-full mx-2">
                 <h3 className="text-lg font-semibold mb-4">
                   {editMode ? "Edit Laporan" : "Tambah Laporan"}
                 </h3>

@@ -56,7 +56,7 @@ const VerifikasiLaporan = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <Sidebar role="admin" />
       <div className="flex-1 flex flex-col bg-gray-100">
         <Navbar role="admin" search={search} setSearch={setSearch} />

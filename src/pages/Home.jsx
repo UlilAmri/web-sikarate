@@ -1,3 +1,4 @@
+import { PhoneIcon } from "@heroicons/react/24/solid";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +11,16 @@ const Home = () => {
     navigate("/login");
   };
 
+  // Emergency Call handler
+  const handleEmergencyCall = () => {
+    window.location.href = "tel:113"; // langsung buka dial ke 113
+  };
+
+  const linkMap = {
+    3: "https://youtu.be/N0aDMVGjolU?si=DyIoFmfZckgYuXfS",
+    4: "https://youtu.be/mcAwxtazLcw?si=oiKf6ErgD26LVMUt",
+  };
+
   useEffect(() => {
     const fetchBerita = async () => {
       const token = localStorage.getItem("token");
@@ -17,7 +28,7 @@ const Home = () => {
         const res = await axios.get("https://api-sikarate.mydemoapp.site/blog/", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setBerita(res.data.data || []); // <- ambil dari data.data
+        setBerita(res.data.data || []);
       } catch (error) {
         console.error("Gagal memuat berita:", error);
         setBerita([]);
@@ -28,61 +39,99 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans bg-gradient-to-br from-blue-400 to-cyan-600 text-white">
+    <div className="min-h-screen font-sans bg-gray-50 text-gray-900 relative pt-10">
       {/* Navbar */}
-      <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <img src="/logo.png" alt="Logo SIKARATEKA" className="h-10" />
-          <div>
-            <h1 className="text-xl font-bold text-red-800">SIKARATEKA</h1>
-            <p className="text-xs text-gray-500 -mt-1 font-bold">
-              Sistem Informasi Kebakaran dan Penyelamatan Terpadu Kolaborasi Aktif
-            </p>
-          </div>
-        </div>
-        <button
-          className="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition"
-          onClick={handlemasuk}
-        >
-          Masuk
-        </button>
-      </nav>
+<nav className="fixed top-0 left-0 w-full bg-gray-900 px-6 py-4 flex justify-between items-center z-50 shadow-md">
+  <div className="flex items-center space-x-4">
+    <img
+      src="/logo.png"
+      alt="Logo SIKARATEKA"
+      className="h-10 bg-white/40 p-1 rounded"
+    />
+
+    <div>
+      <h1 className="text-xl font-bold text-red-600 flex items-center gap-1 -mt-1">
+        SIKARATEKA
+      </h1>
+      <p className="text-xs text-gray-300 -mt-1 font-semibold">
+        Sistem Informasi Kebakaran & Penyelamatan Terpadu
+      </p>
+    </div>
+  </div>
+  <button
+    className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition"
+    onClick={handlemasuk}
+  >
+    Masuk
+  </button>
+</nav>
 
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center py-20 px-4">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">Selamat Datang di SIKARATEKA</h1>
-        <p className="text-lg text-white/90 max-w-2xl mb-10">
-          Web pelaporan dan informasi kebakaran & penyelamatan Dinas Pemadam Kebakaran Kota Mataram
-        </p>
-        <div className="flex gap-10">
-          <img src="/logo-kota.png" alt="Logo Mataram" className="h-36 drop-shadow-lg p-2 rounded-xl" />
-          <img src="/logo.png" alt="Logo Damkar" className="h-36 drop-shadow-lg p-2 rounded-xl" />
+      <section
+        className="relative flex flex-col items-center md:items-start justify-center py-40 px-6 md:px-20 bg-cover bg-center"
+        style={{ backgroundImage: "url(/ooo.jpg)" }}
+      >
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/10 to-transparent"></div>
+
+        <div className="relative z-10 max-w-2xl text-center md:text-left">
+          <h4 className="text-4xl md:text-5xl font-extrabold mb-6 text-white drop-shadow-lg md:ml-[-5px]">
+            Selamat Datang di SIKARATEKA
+          </h4>
+          <p className="text-lg text-gray-200 mb-10 md:ml-[-5px]">
+            Sistem pelaporan & informasi kebakaran dan penyelamatan 
+            <br />Dinas Pemadam Kebakaran Kota Mataram
+          </p>
+
+          {/* Emergency Call Button */}
+          <button
+            onClick={handleEmergencyCall}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full shadow-lg flex items-center justify-center gap-2 font-bold text-base md:text-lg transition transform hover:scale-105 mx-auto md:mx-0"
+    >
+            <PhoneIcon className="h-5 w-5 md:h-6 md:w-6" />
+            Emergency Call
+          </button>
         </div>
       </section>
 
       {/* Blog / Artikel Berita */}
-      <section className="bg-white text-gray-800 px-8 py-12">
-        <h2 className="text-2xl font-bold mb-6 text-center">Berita Terbaru</h2>
+      <section className="bg-gray-50 text-gray-900 px-8 py-16">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Berita Terbaru</h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {berita.length > 0 ? (
             berita.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => navigate(`/berita/${item.id}`)}
-                className="bg-gray-100 rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300"
+              <a
+                key={item.id_artikel}
+                href={linkMap[item.id_artikel] || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-white rounded-lg shadow-md p-4 hover:shadow-lg hover:scale-[1.02] transition duration-300 border border-gray-200"
               >
-                <h3 className="font-semibold text-lg mb-2">{item.judul}</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  {new Date(item.created_at).toLocaleDateString("id-ID")}
-                </p>
-                <p className="text-sm text-gray-700 line-clamp-3">{item.isi}</p>
-              </div>
+                <div className="mt-4">
+                  <h3 className="font-semibold text-lg mb-2 text-gray-800">{item.judul}</h3>
+                  <p className="text-sm text-gray-500 mb-2">
+                    {new Date(item.created_at).toLocaleDateString("id-ID")}
+                  </p>
+                  <p className="text-sm text-gray-700 line-clamp-3">{item.isi}</p>
+                </div>
+              </a>
             ))
           ) : (
-            <p className="text-center col-span-3 text-gray-500 italic">Belum ada berita tersedia</p>
+            <p className="text-center col-span-3 text-gray-500 italic">
+              Belum ada berita tersedia
+            </p>
           )}
         </div>
       </section>
+
+      {/* Floating Emergency Button */}
+      <a
+        href="tel:113"
+        className="fixed bottom-6 right-6 bg-red-500 hover:bg-red-600 text-white p-5 rounded-full shadow-xl flex items-center justify-center z-50 animate-bounce"
+      >
+        <PhoneIcon className="h-7 w-7" />
+      </a>
     </div>
   );
 };
