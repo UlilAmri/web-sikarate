@@ -12,10 +12,11 @@ const Home = () => {
   };
 
   // Emergency Call handler
-  const handleEmergencyCall = () => {
-    window.location.href = "tel:113"; // langsung buka dial ke 113
-  };
-
+const handleEmergencyCall = () => {
+  const nomorWA = "6281917917474"; // ganti dengan nomor WA darurat
+  const waLink = `https://wa.me/${nomorWA}`;
+  window.open(waLink, "_blank"); // buka WA langsung
+};
   const linkMap = {
     3: "https://youtu.be/N0aDMVGjolU?si=DyIoFmfZckgYuXfS",
     4: "https://youtu.be/mcAwxtazLcw?si=oiKf6ErgD26LVMUt",
@@ -54,7 +55,7 @@ const Home = () => {
         SIKARATEKA
       </h1>
       <p className="text-xs text-gray-300 -mt-1 font-semibold">
-        Sistem Informasi Kebakaran & Penyelamatan Terpadu
+        Sistem Informasi Kebakaran & Penyelamatan Terpadu Kolaborasi Aktif
       </p>
     </div>
   </div>
@@ -79,7 +80,7 @@ const Home = () => {
             Selamat Datang di SIKARATEKA
           </h4>
           <p className="text-lg text-gray-200 mb-10 md:ml-[-5px]">
-            Sistem pelaporan & informasi kebakaran dan penyelamatan 
+            Sistem Informasi Kebakaran & Penyelamatan Terpadu Kolaborasi Aktif
             <br />Dinas Pemadam Kebakaran Kota Mataram
           </p>
 
@@ -127,8 +128,10 @@ const Home = () => {
 
       {/* Floating Emergency Button */}
       <a
-        href="tel:113"
-        className="fixed bottom-6 right-6 bg-red-500 hover:bg-red-600 text-white p-5 rounded-full shadow-xl flex items-center justify-center z-50 animate-bounce"
+        href="https://wa.me/6281917917474"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-5 rounded-full shadow-xl flex items-center justify-center z-50 animate-bounce"
       >
         <PhoneIcon className="h-7 w-7" />
       </a>

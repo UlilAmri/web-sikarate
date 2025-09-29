@@ -28,8 +28,6 @@ const Login = () => {
       localStorage.setItem('role', role);
       localStorage.setItem("id_user", id_user);
       
-
-
       // Navigasi berdasarkan role
       if (role === 'admin') {
         navigate('/dashboard-admin');

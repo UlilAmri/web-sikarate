@@ -112,7 +112,7 @@ const DaftarUser = () => {
     if (!konfirmasi) return;
 
     try {
-      await axios.delete(`https://1api-sikarate.mydemoapp.site/${id}`, {
+      await axios.delete(`https://api-sikarate.mydemoapp.site/user/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("User berhasil dihapus!");
@@ -125,7 +125,6 @@ const DaftarUser = () => {
 
   return (
      <div className="flex full-screen">
-    {/* Sidebar selalu full height */}
     <Sidebar role="admin" />
 
     {/* Konten utama */}
