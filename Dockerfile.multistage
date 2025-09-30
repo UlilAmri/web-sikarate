@@ -1,0 +1,43 @@
+# Alternative Dockerfile dengan multi-stage untuk performa
+FROM node:20-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --silent
+
+# Copy source code
+COPY . .
+
+# Build aplikasi
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine AS production
+
+# Install serve
+RUN npm install -g serve
+
+# Create user dari awal (lebih cepat)
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S reactuser -u 1001
+
+# Set working directory dengan ownership yang benar
+WORKDIR /app
+RUN chown reactuser:nodejs /app
+
+# Switch ke user
+USER reactuser
+
+# Copy hanya build folder (lebih sedikit file)
+COPY --from=builder --chown=reactuser:nodejs /app/build ./build
+
+# Expose port
+EXPOSE 3000
+
+# Start aplikasi
+CMD ["serve", "-s", "build", "-l", "3000", "--no-clipboard", "--single"]
