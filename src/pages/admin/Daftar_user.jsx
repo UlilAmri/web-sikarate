@@ -27,7 +27,7 @@ const DaftarUser = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("https://api-sikarate.mydemoapp.site/user/", {
+      const res = await axios.get("https://api-sikarate.mataramkota.go.id/user/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,8 +59,8 @@ const DaftarUser = () => {
     const token = localStorage.getItem("token");
 
     const url = isEditing
-      ? `https://api-sikarate.mydemoapp.site/user/${editUserId}`
-      : "https://api-sikarate.mydemoapp.site/user/";
+      ? `https://api-sikarate.mataramkota.go.id/user/${editUserId}`
+      : "https://api-sikarate.mataramkota.go.id/user/";
     const method = isEditing ? "PUT" : "POST";
     
     try {
@@ -112,7 +112,7 @@ const DaftarUser = () => {
     if (!konfirmasi) return;
 
     try {
-      await axios.delete(`https://api-sikarate.mydemoapp.site/user/${id}`, {
+      await axios.delete(`https://api-sikarate.mataramkota.go.id/user/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("User berhasil dihapus!");

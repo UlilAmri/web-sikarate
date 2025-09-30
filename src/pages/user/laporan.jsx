@@ -41,7 +41,7 @@ import Sidebar from "../layout/Sidebar";
 
             setLoading(true);
             const res = await axios.get(
-            `https://api-sikarate.mydemoapp.site/laporan/user?id_user=${id}`,
+            `https://api-sikarate.mataramkota.go.id/laporan/user?id_user=${id}`,
             { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -65,7 +65,7 @@ import Sidebar from "../layout/Sidebar";
         setLoading(true);
         try {
         const res = await axios.get(
-            `https://api-sikarate.mydemoapp.site/laporan/user?id_user=${idUser}`,
+            `https://api-sikarate.mataramkota.go.id/laporan/user?id_user=${idUser}`,
             { headers: { Authorization: `Bearer ${token}` } }
         );
         setLaporan(res.data.data || []);
@@ -91,7 +91,7 @@ import Sidebar from "../layout/Sidebar";
 
         try {
         await axios.post(
-            "https://api-sikarate.mydemoapp.site/laporan/",
+            "https://api-sikarate.mataramkota.go.id/laporan/",
             newLaporan,
             { headers: { Authorization: `Bearer ${token}` } }
         );

@@ -26,10 +26,10 @@ const DaftarBerita = () => {
     const token = localStorage.getItem("token");
     try {
       const [resBerita, resKategori] = await Promise.all([
-        axios.get("https://api-sikarate.mydemoapp.site/blog/", {
+        axios.get("https://api-sikarate.mataramkota.go.id/blog/", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("https://api-sikarate.mydemoapp.site/kategori/", {
+        axios.get("https://api-sikarate.mataramkota.go.id/kategori/", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -70,7 +70,7 @@ const handleSubmit = async (e) => {
     if (isEdit && form.id_artikel) {
       // ✅ Update artikel pakai id_artikel
       await axios.put(
-        `https://api-sikarate.mydemoapp.site/blog/${form.id_artikel}`,
+        `https://api-sikarate.mataramkota.go.id/blog/${form.id_artikel}`,
         {
           id_kategori: parseInt(form.id_kategori),
           judul: form.judul,
@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
     } else {
       // Tambah artikel baru
       await axios.post(
-        "https://api-sikarate.mydemoapp.site/blog/",
+        "https://api-sikarate.mataramkota.go.id/blog/",
         {
           id_kategori: parseInt(form.id_kategori),
           judul: form.judul,
@@ -119,7 +119,7 @@ const handleSubmit = async (e) => {
     const token = localStorage.getItem("token");
     if (window.confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
       try {
-        await axios.delete(`https://api-sikarate.mydemoapp.site/blog/${id_artikel}`, {
+        await axios.delete(`https://api-sikarate.mataramkota.go.id/blog/${id_artikel}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Berita berhasil dihapus!");

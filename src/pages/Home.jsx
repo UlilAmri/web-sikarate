@@ -26,7 +26,7 @@ const handleEmergencyCall = () => {
     const fetchBerita = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await axios.get("https://api-sikarate.mydemoapp.site/blog/", {
+        const res = await axios.get("https://api-sikarate.mataramkota.go.id/blog/", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setBerita(res.data.data || []);

@@ -13,7 +13,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        'https://api-sikarate.mydemoapp.site/auth/login',
+        'https://api-sikarate.mataramkota.go.id/auth/login',
         {
           email,
           password,
