@@ -27,12 +27,12 @@ RUN addgroup -g 1001 -S nodejs && \
 RUN chown -R reactuser:nodejs /app
 USER reactuser
 
-# Expose port 3000 (sesuai dengan CMD)
-EXPOSE 3000
+# Expose port 3001 (sesuai dengan CMD)
+EXPOSE 3001
 
 # Health check (tanpa curl, menggunakan node)
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+  CMD node -e "require('http').get('http://localhost:3001', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
-# Start aplikasi di port 3000
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Start aplikasi di port 3001
+CMD ["serve", "-s", "build", "-l", "3001"]
