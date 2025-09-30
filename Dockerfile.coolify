@@ -1,13 +1,10 @@
-# Dockerfile untuk deployment di Coolify
+# Dockerfile khusus untuk Coolify deployment
 FROM node:20-alpine
-
-# Install curl untuk health check
-RUN apk add --no-cache curl
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files untuk optimisasi Docker layer caching
+# Copy package files untuk cache layer yang lebih baik
 COPY package*.json ./
 
 # Install dependencies
@@ -23,19 +20,16 @@ RUN npm run build
 RUN npm install -g serve
 
 # Create non-root user untuk security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S reactuser -u 1001 -G nodejs
-
-# Change ownership of app directory
-RUN chown -R reactuser:nodejs /app
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S reactuser -u 1001
 USER reactuser
 
 # Expose port 3000 (standard untuk Coolify)
 EXPOSE 3000
 
-# Health check untuk monitoring
+# Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:3000/ || exit 1
 
-# Start aplikasi dengan serve
-CMD ["serve", "-s", "build", "-l", "3000", "--no-clipboard"]
+# Start aplikasi
+CMD ["serve", "-s", "build", "-l", "3000"]
