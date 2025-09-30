@@ -20,7 +20,11 @@ RUN npm run build
 RUN npm install -g serve
 
 # Expose port 3000 (standard untuk Coolify)
-EXPOSE 3000
+EXPOSE 3001
+
+# Health check (tanpa curl, menggunakan node)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+CMD node -e "require('http').get('http://localhost:3001', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
 # Start aplikasi (tanpa non-root user untuk performa)
-CMD ["serve", "-s", "build", "-l", "3000", "--no-clipboard", "--single"]
+CMD ["serve", "-s", "build", "-l", "3001", "--no-clipboard", "--single"]
