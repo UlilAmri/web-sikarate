@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package files untuk cache layer yang lebih baik
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production --silent
+# Install dependencies (perlu devDependencies untuk build)
+RUN npm ci --silent
 
 # Copy source code
 COPY . .
@@ -20,16 +20,19 @@ RUN npm run build
 RUN npm install -g serve
 
 # Create non-root user untuk security
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S reactuser -u 1001
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S reactuser -u 1001
+
+# Change ownership ke user
+RUN chown -R reactuser:nodejs /app
 USER reactuser
 
-# Expose port 3000 (standard untuk Coolify)
+# Expose port 3000 (sesuai dengan CMD)
 EXPOSE 3000
 
-# Health check
+# Health check (tanpa curl, menggunakan node)
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3001/ || exit 1
+  CMD node -e "require('http').get('http://localhost:3000', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
-# Start aplikasi
-CMD ["serve", "-s", "build", "-l", "3001"]
+# Start aplikasi di port 3000
+CMD ["serve", "-s", "build", "-l", "3000"]
