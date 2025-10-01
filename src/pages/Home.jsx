@@ -94,7 +94,7 @@ const handleEmergencyCall = () => {
             className="bg-red-500 hover:bg-red-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full shadow-lg flex items-center justify-center gap-2 font-bold text-base md:text-lg transition transform hover:scale-105 mx-auto md:mx-0"
           >
             {/* Phone Logo */}
-            <img src="/phone-logo.png" alt="Telepon" className="h-6 w-6 mr-1" />
+            {/* <img src="/phone-logo.png" alt="Telepon" className="h-6 w-6 mr-1" /> */}
             Emergency Call
           </button>
           <button
@@ -102,7 +102,7 @@ const handleEmergencyCall = () => {
             className="bg-green-500 hover:bg-green-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full shadow-lg flex items-center justify-center gap-2 font-bold text-base md:text-lg transition transform hover:scale-105 mx-auto md:mx-0 mt-3"
           >
             {/* WhatsApp Logo */}
-            <img src="/whatsapp-logo.png" alt="WhatsApp" className="h-6 w-6 mr-1" />
+            {/* <img src="/whatsapp-logo.png" alt="WhatsApp" className="h-6 w-6 mr-1" /> */}
             Emergency WhatsApp
           </button>
         </div>
