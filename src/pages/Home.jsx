@@ -12,10 +12,14 @@ const Home = () => {
   };
 
   // Emergency Call handler
-const handleEmergencyCall = () => {
+const handleEmergencyWa = () => {
   const nomorWA = "6281917917474"; // ganti dengan nomor WA darurat
   const waLink = `https://wa.me/${nomorWA}`;
   window.open(waLink, "_blank"); // buka WA langsung
+};
+const handleEmergencyCall = () => {
+  const nomorTelp = "0370645872"; // ganti dengan nomor telepon darurat
+  window.location.href = `tel:${nomorTelp}`; // langsung panggil nomor telepon
 };
   const linkMap = {
     3: "https://youtu.be/N0aDMVGjolU?si=DyIoFmfZckgYuXfS",
@@ -88,14 +92,22 @@ const handleEmergencyCall = () => {
           <button
             onClick={handleEmergencyCall}
             className="bg-red-500 hover:bg-red-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full shadow-lg flex items-center justify-center gap-2 font-bold text-base md:text-lg transition transform hover:scale-105 mx-auto md:mx-0"
-    >
-            <PhoneIcon className="h-5 w-5 md:h-6 md:w-6" />
+          >
+            {/* Phone Logo */}
+            <img src="/phone-logo.png" alt="Telepon" className="h-6 w-6 mr-1" />
             Emergency Call
+          </button>
+          <button
+            onClick={handleEmergencyWa}
+            className="bg-green-500 hover:bg-green-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-full shadow-lg flex items-center justify-center gap-2 font-bold text-base md:text-lg transition transform hover:scale-105 mx-auto md:mx-0 mt-3"
+          >
+            {/* WhatsApp Logo */}
+            <img src="/whatsapp-logo.png" alt="WhatsApp" className="h-6 w-6 mr-1" />
+            Emergency WhatsApp
           </button>
         </div>
       </section>
-
-      {/* Blog / Artikel Berita */}
+      {/* Blog / Artikel Berita */}}
       <section className="bg-gray-50 text-gray-900 px-8 py-16">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Berita Terbaru</h2>
 
