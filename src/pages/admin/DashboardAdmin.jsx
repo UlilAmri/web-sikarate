@@ -32,7 +32,7 @@ const DashboardAdmin = () => {
     const fetchLaporan = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("https://api-sikarate.mataramkota.go.id/laporan/", {
+        const res = await axios.get("https://api-sikarateka.mataramkota.go.id/laporan/", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

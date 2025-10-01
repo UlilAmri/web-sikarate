@@ -19,7 +19,7 @@ const VerifikasiLaporan = () => {
   const fetchLaporan = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("https://api-sikarate.mataramkota.go.id/laporan/", {
+      const res = await axios.get("https://api-sikarateka.mataramkota.go.id/laporan/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,7 +41,7 @@ const VerifikasiLaporan = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `https://api-sikarate.mataramkota.go.id/laporan/${id}/verifikasi`,
+        `https://api-sikarateka.mataramkota.go.id/laporan/${id}/verifikasi`,
         { status_penanganan: newStatus },
         {
           headers: {

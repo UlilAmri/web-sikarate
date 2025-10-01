@@ -24,7 +24,7 @@ const DaftarLaporan = () => {
 
   const fetchLaporan = async () => {
     try {
-      const res = await axios.get("https://api-sikarate.mataramkota.go.id/laporan/", {
+      const res = await axios.get("https://api-sikarateka.mataramkota.go.id/laporan/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLaporan(res.data.data || []);
@@ -51,7 +51,7 @@ const DaftarLaporan = () => {
     try {
       if (editMode) {
         await axios.put(
-          `https://api-sikarate.mataramkota.go.id/laporan/${form.id_laporan}`,
+          `https://api-sikarateka.mataramkota.go.id/laporan/${form.id_laporan}`,
           {
             judul: form.judul,
             lokasi: form.lokasi,
@@ -70,7 +70,7 @@ const DaftarLaporan = () => {
         alert("Laporan berhasil diperbarui!");
       } else {
         await axios.post(
-          "https://api-sikarate.mataramkota.go.id/laporan/",
+          "https://api-sikarateka.mataramkota.go.id/laporan/",
           {
             judul: form.judul,
             lokasi: form.lokasi,
@@ -118,7 +118,7 @@ const DaftarLaporan = () => {
     if (!konfirmasi) return;
 
     try {
-      await axios.delete(`https://api-sikarate.mataramkota.go.id/laporan/${id}`, {
+      await axios.delete(`https://api-sikarateka.mataramkota.go.id/laporan/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Laporan berhasil dihapus!");
